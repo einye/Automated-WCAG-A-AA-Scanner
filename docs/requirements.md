@@ -2,6 +2,9 @@
 
 ## Non-Functional Requirements - Look, feel and experience
 
+### ⚖️ Legal Clarity
+The tool provides what the threshold is for compliance with WCAG and country laws (if any)
+
 ### 📃 Scores per Disability Groups
 The tool provides accessibility scores for recognised disability groups (e.g. "Blind", "Deaf", "Colour-blind" etc.)
 
@@ -18,7 +21,9 @@ Tool is built for people who are just getting into accessibility
 - Simple Results
 - Summarised pass/fail per element
 - Clear, minimalistic fix suggestions
-- 
+
+### LIst Rules for each Element 
+Dev can check all the conventions and practical features required to ensure accessibility for each disability group
 
 ## Functional Requirements
 
