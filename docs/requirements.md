@@ -2,6 +2,14 @@
 
 ## Non-Functional Requirements - Look, feel and experience
 
+### 👥 Target Audience
+Tool is built for people who are just getting into accessibility. It should feel like it highlights the fundamental practices of accessible web development while also providing guidance for the more complex aspects of this. It should cover (at least) the core 20% of accessibility that is 80% of importance. 
+
+Aside from results (scores), the tool should also provide recommendations as well as give the user a framework for them to use/adopt as they venture into the concept of responsible computing in web accessibilty. (Results, Recommendations, Framework)
+- Simple Results
+- Summarised pass/fail per element
+- Clear, minimalistic fix suggestions
+
 ### ⚖️ Legal Clarity
 The tool provides what the threshold is for compliance with WCAG and country laws (if any)
 
@@ -15,12 +23,6 @@ Output has two levels of presentation: developer-focused (detailed) and non-deve
   
 ### 📚 Blog
 Tool contains a blog for giving a foundation/fundamental info about building accessible websites
-
-### 👥 Target Audience
-Tool is built for people who are just getting into accessibility
-- Simple Results
-- Summarised pass/fail per element
-- Clear, minimalistic fix suggestions
 
 ### LIst Rules for each Element 
 Dev can check all the conventions and practical features required to ensure accessibility for each disability group
