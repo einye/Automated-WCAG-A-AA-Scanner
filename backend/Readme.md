@@ -1,3 +1,10 @@
+Package.json contains list of dependencies.
+npm run dev - command to run server.
+Invoke-WebRequest -Uri http://localhost:3001/audit -Method POST -Headers @{"Content-Type" = "application/json"} -Body '{"url": "https://bonfireadventures.com"}' - run on powershell to test website, replace bonfireadventures with any url.
+
+POST request to audit.js, details below:
+
+
 Method: POST
 URL: http://localhost:3001/audit
 
