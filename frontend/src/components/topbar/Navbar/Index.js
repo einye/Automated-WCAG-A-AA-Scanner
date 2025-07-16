@@ -1,6 +1,5 @@
 import { navlist } from "../../../constants/words";
-// test
-console.log(navlist);
+import { Link} from "react-router-dom";
 
 export default function Navbar() {
     return (
@@ -14,8 +13,9 @@ function Navlist() {
     return (
         <ul className="flex justify-between">
             {navlist.map((item, index) => (
-                <li key={index} 
-                className="text-xl font-semibold px-4">{item}</li>
+                <Link to={item.path}>
+                    <li key={index} className="text-xl font-semibold px-4">{item.name}</li>
+                </Link>
             ))}
         </ul>
     )

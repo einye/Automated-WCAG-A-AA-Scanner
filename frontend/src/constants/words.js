@@ -1,5 +1,8 @@
 // Navbar
-export const navlist = ["Home", "Blog", "Contact Us"];
+export const navlist = [
+    {name: 'Home', path: '/'}, 
+    {name: 'Blog', path:'/blog'},
+    {name: 'Contact Us', path: '/contact-us'}];
 
 // HERO TEXT
 export const bigText = "Free Accessibility checker for website owners and developers";
@@ -17,3 +20,8 @@ export const btnStyles = `${roundStyles} ${"bg-gray-700 py-2 px-4 shadow-sm text
 export const urlSubmit = "Evaluate!";
 export const learnTopbar = "Learn!";
 export const aboutWCAG = "About WCAG";
+
+
+// OUTPUT PAGE
+// Text
+export const ratingText = "Some sample text just for show"

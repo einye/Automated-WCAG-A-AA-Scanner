@@ -1,8 +1,8 @@
 import { bigText, smallText } from "../../constants/words";
 import HeroText from "./HeroText";
 import UrlField from "./UrlField";
-import UrlSubmit from "./UrlSubmit";
-import AboutWCAG from "./AboutWCAG";
+import UrlSubmit from "./BtnUrlSubmit";
+import AboutWCAG from "./BtnAboutWCAG";
 
 export default function Hero() {
     return (
