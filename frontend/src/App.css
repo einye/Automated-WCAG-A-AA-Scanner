@@ -1,9 +1,9 @@
 .background-gradient{
   background-image:
-  linear-gradient(to left, rgba(247, 176, 176, 0.1)), 
-  radial-gradient(circle at right, rgba(39, 63, 120, 0.7), rgba(130, 148, 188, 0.4), rgba(255, 255, 255, 0.1)),
-  radial-gradient(circle at top left, rgba(13, 52, 142, 0.9), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ),
-linear-gradient(to right, rgba(161, 69, 69, 0.1), rgba(60, 83, 135, 0.85), rgba(155, 170, 206, 0.85), rgba(221, 226, 238, 0.85)),
+  linear-gradient(to left, rgba(254, 241, 241, 0.2)), 
+  radial-gradient(circle at right, rgba(39, 63, 120, 0.6), rgba(130, 148, 188, 0.4), rgba(255, 255, 255, 0.1)),
+  radial-gradient(circle at top left, rgba(13, 52, 142, 0.8), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ),
+linear-gradient(to right, rgba(161, 69, 69, 0.1), rgba(60, 83, 135, 0.8), rgba(155, 170, 206, 0.8), rgba(221, 226, 238, 0.8)),
 linear-gradient(to left, rgba(36, 220, 164, 0.9), rgba(244, 237, 43, 0.5)),
 radial-gradient(circle at bottom left, #bc2b0be4, rgba(162, 53, 53, 0.9), rgba(181, 190, 211, 0.9));
 }

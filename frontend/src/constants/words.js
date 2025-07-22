@@ -1,3 +1,12 @@
+// Base URL to Backend
+const API_BASE_URL = 'http://localhost:3000';
+
+export const API_ENDPOINTS = {
+    SCAN_URL: `${API_BASE_URL}/api/scan-url`,
+    SCAN_FILE: `${API_BASE_URL}/api/scan-html`,
+    GET_REPORT: `${API_BASE_URL}/api/download-pdf`
+}
+
 // Navbar
 export const navlist = [
     {name: 'Home', path: '/'}, 

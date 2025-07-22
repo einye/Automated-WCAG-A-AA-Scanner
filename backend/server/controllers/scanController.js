@@ -7,6 +7,9 @@ const { generatePDFReport } = require('../services/reportBuilder')
 
 exports.scanURL = async (req, res) => {
   const { url } = req.body;
+  console.log("Req: ", req);
+  console.log("Req body: ", req.body);
+  console.log("Url received: ", url);
   if (!url) return res.status(400).json({ error: 'URL is required' });
 
   getReport(url, async (err, existingReport) => {
@@ -19,7 +22,7 @@ exports.scanURL = async (req, res) => {
       res.json({ fromCache: false, ...result });
     } catch (err) {
       console.error(err);
-      res.status(500).json({ error: 'Scan failed' });
+      res.status(500).json({ error: 'Scan failed', req: req.body });
     }
   });
 };

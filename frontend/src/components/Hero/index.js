@@ -3,6 +3,7 @@ import HeroText from "./HeroText";
 import UrlField from "./UrlField";
 import UrlSubmit from "./BtnUrlSubmit";
 import AboutWCAG from "./BtnAboutWCAG";
+import { useState } from "react";
 
 export default function Hero() {
     return (
@@ -11,8 +12,7 @@ export default function Hero() {
         ${"flex justify-between items-start"}
         ${"w-full flex-grow"}`}>
             <LeftSide />
-            <UrlField />
-            <UrlSubmit />
+            <UrlParent />
         </div>
     )
 }
@@ -24,4 +24,19 @@ function LeftSide() {
         <AboutWCAG />
         </div>
     );
+}
+
+function UrlParent() {
+    const [input, setInput] = useState(0);
+
+    const handleChange = (event) => {
+        setInput(event.target.value)
+    };
+
+    return(
+        <div>
+            <UrlField value={input} handleChangeValue={handleChange}/>
+            <UrlSubmit value={input} handleChangeValue={handleChange}/>
+        </div>
+    )
 }
