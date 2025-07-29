@@ -4,6 +4,7 @@ import Blog from './pages/blog';
 import ContactUs from './pages/contact-us';
 import NotFound from './pages/not-found';
 import Output from './pages/output';
+import OutputComponents from './dummy-pages/output-components';
 
 // REACT ROUTER
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -13,6 +14,7 @@ const router = createBrowserRouter([
   {path:'/contact-us', element: <ContactUs/>},
   {path:'/output', element: <Output/>},
   {path:'/*', element: <NotFound/>},
+  {path:'/output-components', element: <OutputComponents/>},
 ]);
 
 function App() {

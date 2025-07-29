@@ -1,14 +1,22 @@
-export function SendUrl(apiUrl , theinputurl) {
-    fetch(apiUrl , {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            url: theinputurl,
+export async function SendUrl(apiUrl , theinputurl) {
+
+    try {
+        const response = await fetch(apiUrl , {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                url: theinputurl,
+            })
         })
-    })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error(error));
+
+        const data = await response.json();
+
+        return ({response: response, data: data, error: null});
+
+    } catch (error) {
+        console.error(error);
+        return({response: null, data: null, error: error});
+    }
 }

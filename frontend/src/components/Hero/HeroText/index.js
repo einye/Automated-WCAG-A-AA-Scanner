@@ -1,4 +1,4 @@
-import { roundStyles1 } from "../../../constants/words"
+import { roundStyles1 } from "../../../constants/styles"
 import './index.css';
 
 export default function HeroText({bigText, smallText}) {

@@ -1,4 +1,5 @@
-import { btnStyles, aboutWCAG } from "../../../constants/words";
+import { aboutWCAG } from "../../../constants/words";
+import { btnStyles } from "../../../constants/styles";
 
 export default function AboutWCAG() {
     return (
