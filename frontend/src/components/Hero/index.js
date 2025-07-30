@@ -27,7 +27,7 @@ function LeftSide() {
 }
 
 function UrlParent() {
-    const [input, setInput] = useState(0);
+    const [input, setInput] = useState('https://mgalaw.co.ke');
 
     const handleChange = (event) => {
         setInput(event.target.value)

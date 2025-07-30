@@ -8,6 +8,7 @@
 # testing
 /coverage
 /src/dummy-pages
+src/logic/logicTests.js
 
 # production
 /build
