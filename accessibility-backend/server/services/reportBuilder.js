@@ -5,29 +5,31 @@ const path = require('path');
 
 async function generatePDFReport(data, outputPath = null) {
   const {
-    url,
+    urls,
+    reports,
     scannedAt,
-    overallScore,
-    scores,
-    groups,
-    manualReview = [],
     fromHTML = false
   } = data;
 
-  const groupNames = ['visual', 'motor', 'cognitive'];
-    for (const g of groupNames) {
-        if (!groups[g]) {
-            groups[g] = {
-            passedChecks: [],
-            failedChecks: [],
-            total: 0,
-            passed: 0,
-            failed: 0
-            };
-        }
-    }
+  // Normalize to array if single report
+  const reportArray = Array.isArray(reports) ? reports : [data];
 
-  const title = fromHTML ? 'Uploaded HTML Report' : `Accessibility Report for ${url}`;
+  const groupNames = ['visual', 'motor', 'cognitive'];
+  reportArray.forEach(report => {
+    for (const g of groupNames) {
+      if (!report.groups[g]) {
+        report.groups[g] = {
+          passedChecks: [],
+          failedChecks: [],
+          total: 0,
+          passed: 0,
+          failed: 0
+        };
+      }
+    }
+  });
+
+  const title = fromHTML ? 'Uploaded HTML Report' : `Multi-Page Accessibility Report`;
   const reportsDir = path.join(__dirname, '../../public/reports');
   if (!fs.existsSync(reportsDir)) fs.mkdirSync(reportsDir, { recursive: true });
 
@@ -53,63 +55,73 @@ async function generatePDFReport(data, outputPath = null) {
       <body>
         <h1>${title}</h1>
         <p><strong>Date:</strong> ${new Date(scannedAt).toLocaleString()}</p>
-        ${!fromHTML ? `<p><strong>URL:</strong> ${url}</p>` : ""}
-        <p><strong>Overall Accessibility Score:</strong> ${overallScore}%</p>
+        <p><strong>Scanned Pages:</strong> ${reportArray.length}</p>
 
-        <h2 class="section-title">Scores by Disability Group</h2>
-        <ul>
-          <li>👁️ Visual: ${scores.visual}%</li>
-          <li>🖐️ Motor: ${scores.motor}%</li>
-          <li>🧠 Cognitive: ${scores.cognitive}%</li>
-        </ul>
+        ${reportArray.map((report, idx) => {
+          const { url, overallScore, scores, groups, manualReview = [] } = report;
 
-        ${Object.entries(groups).map(([group, g]) => `
-          <div class="group">
-            <h2>${capitalize(group)} Group</h2>
+          return `
+            <hr style="margin-top: 20px;">
+            <h2>Page ${idx + 1}: ${escapeHTML(url || 'Uploaded HTML')}</h2>
+            <p><strong>Overall Accessibility Score:</strong> ${overallScore}%</p>
 
-            <div class="failed-checks">
-              <h3>❌ Failed Checks</h3>
-              ${g.failedChecks.length === 0 ? '<p>None 🎉</p>' : g.failedChecks.map(check => `
-                <div class="rule">
-                  <div><strong>${check.rule}</strong> <span class="impact">[${check.impact}]</span></div>
-                  <div><em>${escapeHTML(check.description)}</em></div>
-                  ${check.html.map(h => `<div class="html-sample">${escapeHTML(h)}</div>`).join('')}
+            <h3 class="section-title">Scores by Disability Group</h3>
+            <ul>
+              <li>👁️ Visual: ${scores.visual}%</li>
+              <li>🖐️ Motor: ${scores.motor}%</li>
+              <li>🧠 Cognitive: ${scores.cognitive}%</li>
+            </ul>
+
+            ${Object.entries(groups).map(([group, g]) => `
+              <div class="group">
+                <h3>${capitalize(group)} Group</h3>
+
+                <div class="failed-checks">
+                  <h4>❌ Failed Checks</h4>
+                  ${g.failedChecks.length === 0 ? '<p>None 🎉</p>' : g.failedChecks.map(check => `
+                    <div class="rule">
+                      <div><strong>${check.rule}</strong> <span class="impact">[${check.impact}]</span></div>
+                      <div><em>${escapeHTML(check.description)}</em></div>
+                      ${check.html.map(h => `<div class="html-sample">${escapeHTML(h)}</div>`).join('')}
+                    </div>
+                  `).join('')}
                 </div>
-              `).join('')}
+
+                <div class="passed-checks">
+                  <h4>✅ Passed Checks</h4>
+                  ${g.passedChecks.length === 0 ? '<p>None</p>' : g.passedChecks.map(check => `
+                    <div class="rule">
+                      <div><strong>${check.rule}</strong></div>
+                      <div><em>${escapeHTML(check.description)}</em></div>
+                      ${check.html.map(h => `<div class="html-sample">${escapeHTML(h)}</div>`).join('')}
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            `).join('')}
+
+            <div class="group">
+              <h3>🔍 Manual Review Needed</h3>
+              ${manualReview.length > 0
+                ? manualReview.map(item => `
+                    <div class="rule">
+                      <div><strong>${item.rule}</strong></div>
+                      <div><em>${escapeHTML(item.description)}</em></div>
+                      ${item.html.map(h => `<div class="html-sample">${escapeHTML(h)}</div>`).join('')}
+                    </div>
+                  `).join('')
+                : `<p>No incomplete rules were flagged, but some accessibility issues may still require manual review. Consider testing:</p>
+                  <ul>
+                    <li>⏳ Keyboard traps or inaccessible dynamic content</li>
+                    <li>🎞️ Video/audio captions, transcripts, timing controls</li>
+                    <li>↔️ Logical tab/focus order</li>
+                    <li>🧠 Cognitive load and consistent navigation</li>
+                  </ul>`
+              }
             </div>
+          `;
+        }).join('')}
 
-            <div class="passed-checks">
-              <h3>✅ Passed Checks</h3>
-              ${g.passedChecks.length === 0 ? '<p>None</p>' : g.passedChecks.map(check => `
-                <div class="rule">
-                  <div><strong>${check.rule}</strong></div>
-                  <div><em>${escapeHTML(check.description)}</em></div>
-                  ${check.html.map(h => `<div class="html-sample">${escapeHTML(h)}</div>`).join('')}
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        `).join('')}
-
-        <div class="group">
-          <h2>🔍 Manual Review Needed</h2>
-          ${manualReview.length > 0
-            ? manualReview.map(item => `
-                <div class="rule">
-                  <div><strong>${item.rule}</strong></div>
-                  <div><em>${escapeHTML(item.description)}</em></div>
-                  ${item.html.map(h => `<div class="html-sample">${escapeHTML(h)}</div>`).join('')}
-                </div>
-              `).join('')
-            : `<p>No incomplete rules were flagged, but some accessibility issues may still require manual review. Consider testing:</p>
-              <ul>
-                <li>⏳ Keyboard traps or inaccessible dynamic content</li>
-                <li>🎞️ Video/audio captions, transcripts, timing controls</li>
-                <li>↔️ Logical tab/focus order</li>
-                <li>🧠 Cognitive load and consistent navigation</li>
-              </ul>`
-          }
-        </div>
         <hr>
         <p style="text-align: center;">END OF REPORT</p>
       </body>
@@ -119,7 +131,7 @@ async function generatePDFReport(data, outputPath = null) {
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
   await page.setContent(html, { waitUntil: 'load' });
-  await page.pdf({ path: filePath, format: 'A4', printBackground: true, margin: { top: '40px', bottom: '40px', left: '30px', right: '30px' },});
+  await page.pdf({ path: filePath, format: 'A4', printBackground: true, margin: { top: '40px', bottom: '40px', left: '30px', right: '30px' } });
   await browser.close();
 
   return filePath;

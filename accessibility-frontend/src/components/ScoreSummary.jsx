@@ -1,7 +1,8 @@
-export default function ScoreSummary({ overall, groupScores }) {
+// components/ScoreSummary.jsx
+export default function ScoreSummary({ overall, groupScores, isAverage = false }) {
   return (
     <div style={{ border: '1px solid #ddd', padding: 16, borderRadius: 6, marginBottom: 20 }}>
-      <h2>Summary</h2>
+      <h2>{isAverage ? 'Average Summary (Across Pages)' : 'Summary'}</h2>
       <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
         <div>
           <strong>Overall Score:</strong> {overall}%

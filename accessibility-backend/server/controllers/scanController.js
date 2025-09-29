@@ -10,8 +10,9 @@ exports.scanURL = async (req, res) => {
   if (!url) return res.status(400).json({ error: 'URL is required' });
 
   try {
-    const result = await axeScanner.scanPage(url);
-    saveReport(url, result);
+    const result = await axeScanner.scanPage(url); //Now an array
+    //saveReport(url, result);
+    result.forEach(result => saveReport(result.url, result));
     res.json(result);
   } catch (err) {
     console.error(err);
@@ -47,7 +48,7 @@ exports.downloadPDF = async (req, res) => {
   const { url } = req.query;
   if (!url) return res.status(400).json({ error: 'URL is required' });
 
-  getLatestReportByURL(url, async (err, report) => {
+  /*getLatestReportByURL(url, async (err, report) => {
     if (err || !report) {
       return res.status(404).json({ error: 'No report found for that URL' });
     }
@@ -59,5 +60,13 @@ exports.downloadPDF = async (req, res) => {
       console.error(err);
       res.status(500).json({ error: 'Failed to generate PDF' });
     }
-  });
+  });*/
+  try {
+    const results = await axeScanner.scanPage(url);
+    const pdfPath = await generatePDFReport({ urls: results.map(r => r.url), reports: results, scannedAt: new Date().toISOString() });
+    res.download(pdfPath, 'accessibility-report.pdf');
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to generate PDF' });
+  }
 };
