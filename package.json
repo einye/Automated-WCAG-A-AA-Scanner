@@ -1,0 +1,18 @@
+{
+  "name": "accessibility-checker-rcc",
+  "version": "1.0.0",
+  "description": "Accessibility Scanner App Monorepo",
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "npm start --prefix server",
+    "client": "npm run dev --prefix client",
+    "install:all": "npm install && npm install --prefix server && npm install --prefix client",
+    "dev": "npm start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
