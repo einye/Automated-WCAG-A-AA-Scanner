@@ -2,10 +2,11 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
+  - [**Automated Accessibility Checker (RCC)**](#automated-accessibility-checker-rcc)
 - [Features](#features)
 - [Problem Background & Project Rationale](#problem-background--project-rationale)
 - [Project Objectives](#project-objectives)
-  - [Tech Stack](#tech-stack)
+- [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
@@ -36,7 +37,7 @@
 - [Database](#database)
   - [Schema](#schema)
     - [Operations](#operations)
-    - [Configuration](#configuration)
+- [Configuration](#configuration)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -107,7 +108,7 @@ for our users.
 -   Support use-cases: HTML uploads, URL scans for live projects, and
     limited crawls for small portfolios.
 
-## Tech Stack
+# Tech Stack
   ---------------- ------------------------------------------------------
   Frontend -          React 19, Vite 7, Tailwind CSS 3, Lucide Icons
 
@@ -589,7 +590,7 @@ CREATE TABLE IF NOT EXISTS reports (
 | saveReport(url, obj)          | Inserts a new report (JSON-stringified) with timestamp  |
 | getLatestReportByURL(url, cb) | Retrieves the most recent report for a given URL        |
 
-### Configuration
+# Configuration
 
 | Setting                  | Location                         | Default                                      |
 |--------------------------|----------------------------------|----------------------------------------------|
