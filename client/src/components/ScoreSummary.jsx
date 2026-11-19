@@ -8,7 +8,7 @@ export default function ScoreSummary({ overall, groupScores, isAverage = false }
   return (
     <div className="border border-gray-200 rounded-lg p-6 mb-6 bg-white shadow-sm">
       <h2 className="text-xl font-bold text-gray-800 mb-4">
-        {isAverage ? '📊 Average Summary (Across Pages)' : '📈 Summary'}
+        {isAverage ? 'Average Summary (Across Pages)' : 'Summary'}
       </h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className={`p-4 rounded-lg border-2 ${getScoreColor(overall)}`}>
@@ -16,15 +16,15 @@ export default function ScoreSummary({ overall, groupScores, isAverage = false }
           <div className="text-3xl font-bold">{overall}%</div>
         </div>
         <div className={`p-4 rounded-lg border-2 ${getScoreColor(groupScores.visual)}`}>
-          <div className="text-sm font-medium mb-1">👁️ Visual</div>
+          <div className="text-sm font-medium mb-1">Visual</div>
           <div className="text-3xl font-bold">{groupScores.visual}%</div>
         </div>
         <div className={`p-4 rounded-lg border-2 ${getScoreColor(groupScores.motor)}`}>
-          <div className="text-sm font-medium mb-1">🖱️ Motor</div>
+          <div className="text-sm font-medium mb-1">Motor</div>
           <div className="text-3xl font-bold">{groupScores.motor}%</div>
         </div>
         <div className={`p-4 rounded-lg border-2 ${getScoreColor(groupScores.cognitive)}`}>
-          <div className="text-sm font-medium mb-1">🧠 Cognitive</div>
+          <div className="text-sm font-medium mb-1">Cognitive</div>
           <div className="text-3xl font-bold">{groupScores.cognitive}%</div>
         </div>
       </div>

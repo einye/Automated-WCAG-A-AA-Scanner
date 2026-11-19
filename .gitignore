@@ -1,6 +1,7 @@
 client/node_modules
-node_modules
 server/auditReports.db
-server/public
-server/uploads/
+public/
+uploads/
 server/node_modules
+server/.env
+.gitignore

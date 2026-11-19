@@ -1,14 +1,43 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import InputPanel from './components/InputPanel';
 import ScoreSummary from './components/ScoreSummary';
 import GroupDetailAccordion from './components/GroupDetailAccordion';
 import ManualReviewSection from './components/ManualReviewSection';
 import PdfDownload from './components/PdfDownload';
+import HeroSection from './components/HeroSection';
+import LegislationSection from './components/LegislationSection';
+import HowWeScore from './components/HowWeScore';
 
 function App() {
   const [reports, setReports] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  if (typeof window !== 'undefined' && window.location.pathname === '/how-we-score') {
+    return <HowWeScore />;
+  }
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('source') === 'extension') {
+      const fetchExtensionResults = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+          const res = await fetch('/api/extension-results');
+          if (!res.ok) throw new Error('Could not retrieve extension scan results. Please try again.');
+          const data = await res.json();
+          setReports([data]);
+        } catch (e) {
+          console.error('Extension Results Error:', e);
+          setError(e.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchExtensionResults();
+    }
+  }, []);
 
   const runUrlScan = async (url, maxPages) => {
     setLoading(true);
@@ -88,7 +117,7 @@ function App() {
       <div className="max-w-6xl mx-auto px-4 py-8">
         <header className="mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            ♿ Accessibility Audit Tool
+            Accessibility Audit Tool
           </h1>
           <p className="text-gray-600">
             Powered by axe-core • Analyze WCAG compliance across visual, motor, and cognitive criteria
@@ -131,7 +160,7 @@ function App() {
                     className="mb-8 border border-gray-200 bg-white rounded-lg p-6 shadow-md"
                   >
                     <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-4 border-b border-gray-200">
-                      🌐 Page: {report.url || 'Uploaded HTML'}
+                      Page: {report.url || 'Uploaded HTML'}
                     </h2>
                     <ScoreSummary
                       overall={report.overallScore}
@@ -154,10 +183,9 @@ function App() {
             </>
           )
         ) : (
-          <div className="text-center py-12 bg-white border border-gray-200 rounded-lg">
-            <p className="text-gray-500 text-lg">
-              👆 Enter a URL or upload an HTML file to get started
-            </p>
+          <div>
+            <HeroSection />
+            <LegislationSection />
           </div>
         )}
       </div>

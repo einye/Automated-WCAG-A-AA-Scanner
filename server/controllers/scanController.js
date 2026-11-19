@@ -14,7 +14,6 @@ exports.scanURL = async (req, res) => {
 
   try {
     const result = await axeScanner.scanPage(url, pageLimit); //Now an array
-    //saveReport(url, result);
     result.forEach(result => saveReport(result.url, result));
     res.json(result);
   } catch (err) {
@@ -50,6 +49,10 @@ exports.scanHTML = async (req, res) => {
 exports.downloadPDF = async (req, res) => {
   const { url } = req.query;
   if (!url) return res.status(400).json({ error: 'URL is required' });
+  
+  // Set longer timeout for PDF download
+  res.setTimeout(300000); // 5 minutes
+  
   try {
     const results = await axeScanner.scanPage(url);
     const pdfPath = await generatePDFReport({ urls: results.map(r => r.url), reports: results, scannedAt: new Date().toISOString() });
@@ -57,5 +60,29 @@ exports.downloadPDF = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to generate PDF' });
+  }
+};
+
+let latestExtensionScan = null;
+
+exports.storeExtensionResults = async (req, res) => {
+  try {
+    latestExtensionScan = req.body;
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to store extension scan results' });
+  }
+};
+
+exports.getExtensionResults = async (req, res) => {
+  try {
+    if (!latestExtensionScan) {
+      return res.status(404).json({ error: 'No extension scan results found' });
+    }
+    res.json(latestExtensionScan);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to retrieve extension scan results' });
   }
 };

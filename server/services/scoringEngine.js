@@ -5,7 +5,7 @@ function classifyResults(axeResults) {
   const passes = axeResults.passes || [];
   const incomplete = axeResults.incomplete || [];
 
-  // Init group scores (excluding 'deaf')
+  // Init group scores
   const groups = {
     visual: createGroupObject(),
     motor: createGroupObject(),
