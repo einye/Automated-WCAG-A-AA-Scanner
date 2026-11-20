@@ -69,9 +69,9 @@ As digital services become essential for education, employment, and government, 
 
 | Range | Rating | Color |
 | :--- | :--- | :--- |
-| **90–100%** | Excellent | 🟢 Green |
-| **70–89%** | Needs Attention | 🟡 Yellow |
-| **< 70%** | Poor | 🔴 Red |
+| **90–100%** | Excellent | Green |
+| **70–89%** | Needs Attention | Yellow |
+| **< 70%** | Poor | Red |
 
 Note: Only rules present in ruleMap.js are scored. Unmapped axe-core rules are silently ignored. When a rule is defined multiple times in the map, the last definition wins (JavaScript object key semantics).
 
