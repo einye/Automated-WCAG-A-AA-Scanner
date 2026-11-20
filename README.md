@@ -158,6 +158,6 @@ cp server/.env.example server/.env
 | :--- | :--- | :--- |
 | `OPENROUTER_API_KEY` | For AI fixes | OpenRouter API key |
 
-## Acknowledgments
+## Acknowledgements
 
 [Deque Systems](https://www.deque.com/axe/axe-core/) and [axe-core](https://github.com/dequelabs/axe-core)
